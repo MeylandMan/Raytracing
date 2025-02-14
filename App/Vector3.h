@@ -123,23 +123,30 @@ bool operator<(const vec3& l, const vec3& r) {
 		return false;
 }
 bool operator<=(const vec3& l, const vec3& r) {
-	if (l.x <= r.x && r.y <= r.y && r.z <= r.z)
-		return true;
-	else
-		return false;
+	return l.x <= r.x && r.y <= r.y && r.z <= r.z;
 }
 
 bool operator>(const vec3& l, const vec3& r) {
-	if (l.x > r.x && r.y > r.y && r.z > r.z)
-		return true;
-	else
-		return false;
+	return l.x > r.x && r.y > r.y && r.z > r.z;
 }
 bool operator>=(const vec3& l, const vec3& r) {
-	if (l.x >= r.x && r.y >= r.y && r.z >= r.z)
-		return true;
-	else
-		return false;
+	return l.x >= r.x && r.y >= r.y && r.z >= r.z;
+}
+
+float Dot(const vec3& l, const vec3& r) {
+	return l.x * r.x + l.y * r.y + l.z * r.z;
+}
+
+vec3 Cross(const vec3& l, const vec3& r) {
+	vec3 result;
+	result.x = l.y * r.z - l.z * r.y;
+	result.y = l.z * r.x - l.x * r.z;
+	result.z = l.x * r.y - l.y * r.x;
+	return result;
+}
+
+vec3 Normalized(const vec3& v) {
+	return v * (1.0f / v.length());
 }
 
 #endif

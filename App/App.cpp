@@ -8,7 +8,7 @@ int main()
 
     // Render
 
-    std::cout << "P3\n" << image_width << '  '  << image_height << "\n255\n";
+    std::cout << "P3\n" << image_width << " " << image_height << "\n255\n";
 
     for (unsigned int j = 0; j < image_width; j++) {
         for (unsigned int i = 0; i < image_height; i++) {
@@ -20,7 +20,9 @@ int main()
             int ig = int(255.999 * g);
             int ib = int(255.999 * b);
 
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+            std::cout << ir << " " << ig << " " << ib << " ";
         }
+
+        std::cout << "\n";
     }
 }

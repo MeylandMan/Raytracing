@@ -15,7 +15,7 @@ public:
 	int GetWidth() const { return m_Width; }
 	int GetHeight() const { return m_Height; }
 
-	void SavePPM(const std::string& filename);
+	void SavePNG(const std::string& filename);
 
 private:
 	int m_Width, m_Height;

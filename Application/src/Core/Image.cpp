@@ -2,6 +2,10 @@
 #include <fstream>
 #include <iostream>
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb_image_write.h>
+
+
 Image::Image(int width, int height)
 	: m_Width(width), m_Height(height), m_CurrentLine(0), m_Running(false), m_Done(false)
 {
@@ -51,21 +55,18 @@ const std::vector<unsigned char>& Image::GetPixels() const {
 	return m_Pixels;
 }
 
-void Image::SavePPM(const std::string& filename) {
-	std::ofstream image_file(filename);
-	if (!image_file) {
-		std::cerr << "Error while loading the file: " << filename << "\n";
-		return;
+void Image::SavePNG(const std::string& filename) {
+
+	std::vector<unsigned char> flipped(m_Pixels.size());
+	for (int y = 0; y < m_Height; ++y) {
+		memcpy(
+			&flipped[y * m_Width * 3],
+			&m_Pixels[(m_Height - 1 - y) * m_Width * 3],
+			m_Width * 3
+		);
 	}
-	image_file << "P3\n" << m_Width << " " << m_Height << "\n255\n";
-	for (int j = 0; j < m_Height; ++j) {
-		for (int i = 0; i < m_Width; ++i) {
-			int idx = (j * m_Width + i) * 3;
-			image_file << (int)m_Pixels[idx] << " "
-				<< (int)m_Pixels[idx + 1] << " "
-				<< (int)m_Pixels[idx + 2] << " ";
-		}
-		image_file << "\n";
+	if (!stbi_write_png(filename.c_str(), m_Width, m_Height, 3, flipped.data(), m_Width * 3)) {
+		std::cerr << "Erreur saving the file to PNG : " << filename << "\n";
 	}
-	image_file.close();
 }
+

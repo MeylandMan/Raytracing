@@ -248,8 +248,8 @@ void Application::OnUpdate() {
 	}
 	if (m_ImageGen->IsDone()) {
 		ImGui::Text("Image Done in %.3f seconds", m_ImageGen->GetElapsedTime());
-		if (ImGui::Button("Save as PPM")) {
-			m_ImageGen->SavePPM("image.ppm");
+		if (ImGui::Button("Save as PNG")) {
+			m_ImageGen->SavePNG("image.png");
 		}
 	}
 	else if (m_ImageGen->IsDone() == false && m_ImageGen->GetElapsedTime() == 0.0) {

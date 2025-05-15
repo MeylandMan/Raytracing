@@ -11,5 +11,5 @@ bin-int/
 *.sln
 
 # Files
-**.ppm
+**.png
 imgui.ini

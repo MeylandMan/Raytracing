@@ -10,6 +10,7 @@ project "Application"
 	files {
 		"src/**.h",
 		"src/**.cpp",
+		"%{wks.location}/Thirdparty/stb/stb_image_write.h",
 		"%{wks.location}/Thirdparty/glm/glm/**.hpp",
 		"%{wks.location}/Thirdparty/glm/glm/**.inl",
 	}
@@ -25,6 +26,7 @@ project "Application"
 		"%{wks.location}/Thirdparty/GLFW/include",
 		"%{wks.location}/Thirdparty/imgui",
 		"%{wks.location}/Thirdparty/glm",
+		"%{wks.location}/Thirdparty/stb/",
 		"%{wks.location}/Thirdparty/Glad/include"
 	}
 

@@ -32,7 +32,7 @@ project "Application"
 	{
 		"GLFW",
 		"Glad",
-		"ImGui",
+		"ImGui"
 	}
 	
 	flags { "NoPCH" }

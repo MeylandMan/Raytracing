@@ -3,6 +3,12 @@
 #include "Window.h"
 #include <memory>
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+
 class Application
 {
 public:
@@ -20,6 +26,8 @@ public:
 	void OnFramebufferResize(int width, int height);
 	void OnWindowClose();
 
+protected:
+	void SetDarkThemeColors();
 	void RegisterCallbacks();
 
 	std::unique_ptr<Window> m_Window;

@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Image.h"
 #include "Window.h"
+
 #include <memory>
 
 #include <imgui.h>
@@ -31,4 +33,7 @@ protected:
 	void RegisterCallbacks();
 
 	std::unique_ptr<Window> m_Window;
+	std::unique_ptr<Image> m_ImageGen;
+
+	unsigned int m_ImageTexture = 0;
 };

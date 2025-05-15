@@ -18,6 +18,7 @@ group("Core")
 group("")
 
 group("Dependencies")
+	include "Thirdparty/Glad"
 	include "Thirdparty/premake"
 	include "Thirdparty/GLFW"
 	include "Thirdparty/imgui"

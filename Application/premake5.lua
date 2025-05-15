@@ -24,12 +24,14 @@ project "Application"
 		"src",
 		"%{wks.location}/Thirdparty/GLFW/include",
 		"%{wks.location}/Thirdparty/imgui",
-		"%{wks.location}/Thirdparty/glm"
+		"%{wks.location}/Thirdparty/glm",
+		"%{wks.location}/Thirdparty/Glad/include"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
 		"ImGui",
 	}
 	

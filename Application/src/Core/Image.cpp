@@ -1,4 +1,7 @@
 #include "Image.h"
+
+#include "Color.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -7,7 +10,8 @@
 
 
 Image::Image(int width, int height)
-	: m_Width(width), m_Height(height), m_CurrentLine(0), m_Running(false), m_Done(false)
+	: m_CurrentLine(0), m_Running(false), m_Done(false),
+		m_Params(ImageParams(width, height))
 {
 	m_Pixels.resize(width * height * 3, 0);
 }
@@ -21,23 +25,18 @@ void Image::Start() {
 
 void Image::Update() {
 	if (!m_Running || m_Done) return;
-	if (m_CurrentLine >= m_Height) {
+
+	if (m_CurrentLine >= m_Params.Height) {
 		m_Done = true;
 		m_Running = false;
 		m_EndTime = std::chrono::high_resolution_clock::now();
 		return;
 	}
-	for (int i = 0; i < m_Width; ++i) {
-		double r = double(i) / (m_Width - 1);
-		double g = double(m_CurrentLine) / (m_Height - 1);
-		double b = 0.0;
-		int ir = int(255.999 * r);
-		int ig = int(255.999 * g);
-		int ib = int(255.999 * b);
-		int idx = ((m_Height - 1 - m_CurrentLine) * m_Width + i) * 3;
-		m_Pixels[idx + 0] = static_cast<unsigned char>(ir);
-		m_Pixels[idx + 1] = static_cast<unsigned char>(ig);
-		m_Pixels[idx + 2] = static_cast<unsigned char>(ib);
+
+	for (int i = 0; i < m_Params.Width; ++i) {
+
+		auto col = color(double(i) / (m_Params.Width - 1), double(m_CurrentLine) / (m_Params.Height - 1), 0.0);
+		write_color(m_Params, col, m_Pixels, i, m_CurrentLine);
 	}
 	++m_CurrentLine;
 }
@@ -58,15 +57,15 @@ const std::vector<unsigned char>& Image::GetPixels() const {
 void Image::SavePNG(const std::string& filename) {
 
 	std::vector<unsigned char> flipped(m_Pixels.size());
-	for (int y = 0; y < m_Height; ++y) {
+	for (int y = 0; y < m_Params.Height; ++y) {
 		memcpy(
-			&flipped[y * m_Width * 3],
-			&m_Pixels[(m_Height - 1 - y) * m_Width * 3],
-			m_Width * 3
+			&flipped[y * m_Params.Width * 3],
+			&m_Pixels[(m_Params.Height - 1 - y) * m_Params.Width * 3],
+			m_Params.Width * 3
 		);
 	}
-	if (!stbi_write_png(filename.c_str(), m_Width, m_Height, 3, flipped.data(), m_Width * 3)) {
-		std::cerr << "Erreur saving the file to PNG : " << filename << "\n";
+	if (!stbi_write_png(filename.c_str(), m_Params.Width, m_Params.Height, 3, flipped.data(), m_Params.Width * 3)) {
+		std::cerr << "Error while saving the file to PNG : " << filename << "\n";
 	}
 }
 
